@@ -1,0 +1,11 @@
+# use glob syntax.
+
+*.egg-info
+
+dist
+build
+?env
+*.pyc
+__pycache__
+
+.idea/workspace.xml
