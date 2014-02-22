@@ -6,6 +6,7 @@ from pynmea.exceptions import NoDataGivenError
 class NMEAStream(object):
     """ NMEAStream object is used to
     """
+
     def __init__(self, stream_obj=None):
         """ stream_obj should be a file like object.
             If the requirement is just to split data in memory, no stream_obj

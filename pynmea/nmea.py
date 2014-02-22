@@ -1,6 +1,7 @@
 import re
 from pynmea.utils import checksum_calc
 
+
 class NMEASentence(object):
     """ Base sentence class. This is used to pull apart a sentence.
         It will not have any real reference to what things mean. Things that
@@ -27,9 +28,9 @@ class NMEASentence(object):
             d, par, ck = self.parts.pop().rpartition('*')
             self.parts.extend([d])
 
-        #if '*' in self.parts[-1]:
-            #d, par, ck = self.parts.pop().rpartition('*')
-            #self.parts.extend([d])
+        # if '*' in self.parts[-1]:
+        #     d, par, ck = self.parts.pop().rpartition('*')
+        #     self.parts.extend([d])
 
         self.sen_type = self.parts[0]
         if self.parts[0].startswith('$'):
@@ -54,7 +55,7 @@ class NMEASentence(object):
             if index + 1 > parts_len:
                 break
             setattr(self, item[1], self.parts[index + 1])
-        #for index, item in enumerate(self.parts[1:]):
+            #for index, item in enumerate(self.parts[1:]):
             #setattr(self, self.parse_map[index][1], item)
 
     def check_chksum(self):
@@ -65,8 +66,6 @@ class NMEASentence(object):
         return (result.upper() == self.checksum.upper())
 
 
-
-
 # ---------------------------------------------------------------------------- #
 # Here are all the currently supported sentences. All should eventually be
 # supported. They are being added as properties and other useful functions are
@@ -75,6 +74,7 @@ class NMEASentence(object):
 class GPAAM(NMEASentence):
     """ Waypoint Arrival Alarm
     """
+
     def __init__(self):
         parse_map = (
             ("Arrival Circle Entered", "arrival_circ_entered"),
@@ -89,11 +89,12 @@ class GPAAM(NMEASentence):
 class GPALM(NMEASentence):
     """ GPS Almanac data
     """
+
     def __init__(self):
         parse_map = (("Total number of messages", "total_num_msgs"),
                      ("Message number", "msg_num"),
-                     ("Satellite PRN number", "sat_prn_num"), # 01 - 32
-                     ("GPS week number", "gps_week_num"), # Week since Jan 6 1980
+                     ("Satellite PRN number", "sat_prn_num"),  # 01 - 32
+                     ("GPS week number", "gps_week_num"),  # Week since Jan 6 1980
                      ("SV Health, bits 17-24 of each almanac page", "sv_health"),
                      ("Eccentricity", "eccentricity"),
                      ("Almanac Reference Time", "alamanac_ref_time"),
@@ -120,10 +121,10 @@ class GPAPA(NMEASentence):
             ("Cross Track Error Magnitude", "cross_track_err_mag"),
             ("Direction to Steer (L or R)", "dir_steer"),
             ("Cross Track Units (Nautical Miles or KM)", "cross_track_unit"),
-            ("Arrival Circle Entered", "arr_circle_entered"), # A = True
-            ("Perpendicular passed at waypoint", "perp_passed"), # A = True
+            ("Arrival Circle Entered", "arr_circle_entered"),  # A = True
+            ("Perpendicular passed at waypoint", "perp_passed"),  # A = True
             ("Bearing origin to destination", "bearing_to_dest"),
-            ("Bearing type", "bearing_type"), # M = Magnetic, T = True
+            ("Bearing type", "bearing_type"),  # M = Magnetic, T = True
             ("Destination waypoint ID", "dest_waypoint_id"))
 
         super(GPAPA, self).__init__(parse_map)
@@ -140,15 +141,15 @@ class GPAPB(NMEASentence):
             ("Cross Track Error Magnitude", "cross_track_err_mag"),
             ("Direction to Steer (L or R)", "dir_steer"),
             ("Cross Track Units (Nautical Miles or KM)", "cross_track_unit"),
-            ("Arrival Circle Entered", "arr_circle_entered"), # A = True
-            ("Perpendicular passed at waypoint", "perp_passed"), # A = True
+            ("Arrival Circle Entered", "arr_circle_entered"),  # A = True
+            ("Perpendicular passed at waypoint", "perp_passed"),  # A = True
             ("Bearing origin to destination", "bearing_to_dest"),
-            ("Bearing type", "bearing_type"), # M = Magnetic, T = True
+            ("Bearing type", "bearing_type"),  # M = Magnetic, T = True
             ("Destination waypoint ID", "dest_waypoint_id"),
             ("Bearing, present position to dest", "bearing_pres_dest"),
-            ("Bearing to destination, type", "bearing_pres_dest_type"), # M = Magnetic, T = True
+            ("Bearing to destination, type", "bearing_pres_dest_type"),  # M = Magnetic, T = True
             ("Heading to steer to destination", "heading_to_dest"),
-            ("Heading to steer to destination type", "heading_to_dest_type")) # M = Magnetic, T = True
+            ("Heading to steer to destination type", "heading_to_dest_type"))  # M = Magnetic, T = True
 
         super(GPAPB, self).__init__(parse_map)
 
@@ -156,6 +157,7 @@ class GPAPB(NMEASentence):
 class GPBEC(NMEASentence):
     """ Bearing & Distance to Waypoint, Dead Reckoning
     """
+
     def __init__(self):
         parse_map = (
             ("Timestamp", "timestamp"),
@@ -164,7 +166,7 @@ class GPBEC(NMEASentence):
             ("Waypoint Longitude", "waypoint_lon"),
             ("Waypoint Longitude direction", "waypoint_lon_dir"),
             ("Bearing, true", "bearing_true"),
-            ("Bearing True symbol", "bearing_true_sym"), # T = true
+            ("Bearing True symbol", "bearing_true_sym"),  # T = true
             ("Bearing Magnetic", "bearing_mag"),
             ("Bearing Magnetic symbol", "bearing_mag_sym"),
             ("Nautical Miles", "nautical_miles"),
@@ -219,7 +221,7 @@ class GPBWC(NMEASentence):
             ('Range to waypoint', 'range_next'),
             ('Unit of range', 'range_unit'),
             ('Waypoint Name', 'waypoint_name'))
-            #('Checksum', 'checksum'))
+        #('Checksum', 'checksum'))
 
         super(GPBWC, self).__init__(parse_map)
 
@@ -239,7 +241,7 @@ class GPBWR(NMEASentence):
             ('Range to waypoint', 'range_next'),
             ('Unit of range', 'range_unit'),
             ('Waypoint Name', 'waypoint_name'))
-            #('Checksum', 'checksum'))
+        #('Checksum', 'checksum'))
 
         super(GPBWR, self).__init__(parse_map)
 
@@ -261,7 +263,7 @@ class GPGGA(NMEASentence):
             ('Units of Geoidal Separation (meters)', 'geo_sep_units'),
             ('Age of Differential GPS Data (secs)', 'age_gps_data'),
             ('Differential Reference Station ID', 'ref_station_id'))
-            #('Checksum', 'checksum'))
+        #('Checksum', 'checksum'))
 
         super(GPGGA, self).__init__(parse_map)
 
@@ -269,6 +271,7 @@ class GPGGA(NMEASentence):
 class GPBWW(NMEASentence):
     """ Bearing, Waypoint to Waypoint
     """
+
     def __init__(self):
         parse_map = (
             ("Bearing degrees True", "bearing_deg_true"),
@@ -295,57 +298,57 @@ class GPGLL(NMEASentence):
 
         self._use_data_validity = False
 
-    #def _parse(self, nmea_str):
-        #""" GPGGL Allows for a couple of different formats.
-            #The all have lat,direction,lon,direction
-
-            #but one may have timestamp,data_validity
-            #while the other has only checksum
-
-            #We shall treat data_validity as a checksum and always
-            #add in a timestamp field
-
-        #"""
-        #self.nmea_sentence = nmea_str
-        #self.parts = nmea_str.split(',')
-
-        #chksum_regex = re.compile(r".+((\*{1})(?i)(?P<chksum>[0-9a-f]{2}))$")
-        #m = chksum_regex.match(nmea_str)
-
-        #if m:
-            #self.checksum = m.groupdict()['chksum']
-
-
-        ##if '*' in self.parts[-1]:
-            ### There is a checksum but no timestamp + data_validity.
-            ### Add an empty field for the timestamp and indicate that when
-            ### validating the checksum, we should use validity, not a
-            ### calculation
-            ##d, par, ck = self.parts.pop().rpartition('*')
-            ##self.parts.extend([d, ''])
-            ##self._use_data_validity = True
-
-        #self.sen_type = self.parts[0]
-        #if self.parts[0].startswith('$'):
-            #self.parts[0] = self.parts[0][1:]
-        #self.sen_type = self.parts[0]
-
-    #def check_chksum(self):
-        #""" Override check_checksum. If it has been detected that
-            #the checksum field contains "A" for valid data and something else
-            #for invalid, do a check based on thsi information. Otherwise, call
-            #to original checksum code from the superclass
-        #"""
-        ## If we are looking for an "A" character
-        #if self._use_data_validity:
-            #if self.checksum == 'A':
-                #return True
-            #else:
-                #return False
-
-        #else:
-            ## Otherwise, call the superclass version
-            #return super(GPGLL, self).check_chksum()
+    # def _parse(self, nmea_str):
+    #     """ GPGGL Allows for a couple of different formats.
+    #         The all have lat,direction,lon,direction
+    #
+    #         but one may have timestamp,data_validity
+    #         while the other has only checksum
+    #
+    #         We shall treat data_validity as a checksum and always
+    #         add in a timestamp field
+    #
+    #     """
+    #     self.nmea_sentence = nmea_str
+    #     self.parts = nmea_str.split(',')
+    #
+    #     chksum_regex = re.compile(r".+((\*{1})(?i)(?P<chksum>[0-9a-f]{2}))$")
+    #     m = chksum_regex.match(nmea_str)
+    #
+    #     if m:
+    #         self.checksum = m.groupdict()['chksum']
+    #
+    #
+    #     #if '*' in self.parts[-1]:
+    #         ## There is a checksum but no timestamp + data_validity.
+    #         ## Add an empty field for the timestamp and indicate that when
+    #         ## validating the checksum, we should use validity, not a
+    #         ## calculation
+    #         #d, par, ck = self.parts.pop().rpartition('*')
+    #         #self.parts.extend([d, ''])
+    #         #self._use_data_validity = True
+    #
+    #     self.sen_type = self.parts[0]
+    #     if self.parts[0].startswith('$'):
+    #         self.parts[0] = self.parts[0][1:]
+    #     self.sen_type = self.parts[0]
+    #
+    # def check_chksum(self):
+    #     """ Override check_checksum. If it has been detected that
+    #         the checksum field contains "A" for valid data and something else
+    #         for invalid, do a check based on thsi information. Otherwise, call
+    #         to original checksum code from the superclass
+    #     """
+    #     # If we are looking for an "A" character
+    #     if self._use_data_validity:
+    #         if self.checksum == 'A':
+    #             return True
+    #         else:
+    #             return False
+    #
+    #     else:
+    #         # Otherwise, call the superclass version
+    #         return super(GPGLL, self).check_chksum()
 
     @property
     def latitude(self):
@@ -386,7 +389,7 @@ class GPGSA(NMEASentence):
             ('PDOP (Dilution of precision)', 'pdop'),
             ('HDOP (Horizontal DOP)', 'hdop'),
             ('VDOP (Vertical DOP)', 'vdop'))
-            #('Checksum', 'checksum'))
+        #('Checksum', 'checksum'))
 
         super(GPGSA, self).__init__(parse_map)
 
@@ -398,22 +401,22 @@ class GPGSV(NMEASentence):
             ('Message Number', 'msg_num'),
             ('Total number of SVs in view', 'num_sv_in_view'),
             ('SV PRN number 1', 'sv_prn_num_1'),
-            ('Elevation in degrees 1', 'elevation_deg_1'), # 90 max
-            ('Azimuth, deg from true north 1', 'azimuth_1'), # 000 to 159
-            ('SNR 1', 'snr_1'), # 00-99 dB
+            ('Elevation in degrees 1', 'elevation_deg_1'),  # 90 max
+            ('Azimuth, deg from true north 1', 'azimuth_1'),  # 000 to 159
+            ('SNR 1', 'snr_1'),  # 00-99 dB
             ('SV PRN number 2', 'sv_prn_num_2'),
-            ('Elevation in degrees 2', 'elevation_deg_2'), # 90 max
-            ('Azimuth, deg from true north 2', 'azimuth_2'), # 000 to 159
-            ('SNR 2', 'snr_2'), # 00-99 dB
+            ('Elevation in degrees 2', 'elevation_deg_2'),  # 90 max
+            ('Azimuth, deg from true north 2', 'azimuth_2'),  # 000 to 159
+            ('SNR 2', 'snr_2'),  # 00-99 dB
             ('SV PRN number 3', 'sv_prn_num_3'),
-            ('Elevation in degrees 3', 'elevation_deg_3'), # 90 max
-            ('Azimuth, deg from true north 3', 'azimuth_3'), # 000 to 159
-            ('SNR 3', 'snr_3'), # 00-99 dB
+            ('Elevation in degrees 3', 'elevation_deg_3'),  # 90 max
+            ('Azimuth, deg from true north 3', 'azimuth_3'),  # 000 to 159
+            ('SNR 3', 'snr_3'),  # 00-99 dB
             ('SV PRN number 4', 'sv_prn_num_4'),
-            ('Elevation in degrees 4', 'elevation_deg_4'), # 90 max
-            ('Azimuth, deg from true north 4', 'azimuth_4'), # 000 to 159
+            ('Elevation in degrees 4', 'elevation_deg_4'),  # 90 max
+            ('Azimuth, deg from true north 4', 'azimuth_4'),  # 000 to 159
             ('SNR 4', 'snr_4'))  # 00-99 dB
-            #('Checksum', 'checksum'))
+        #('Checksum', 'checksum'))
 
         super(GPGSV, self).__init__(parse_map)
 
@@ -422,6 +425,7 @@ class GPHDG(NMEASentence):
     """ NOTE! This is a GUESS as I cannot find an actual spec
         telling me the fields. Updates are welcome!
     """
+
     def __init__(self):
         parse_map = (
             ("Heading", "heading"),
@@ -429,7 +433,7 @@ class GPHDG(NMEASentence):
             ("Deviation Direction", "dev_dir"),
             ("Variation", "variation"),
             ("Variation Direction", "var_dir"))
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
 
         super(GPHDG, self).__init__(parse_map)
 
@@ -439,7 +443,7 @@ class GPHDT(NMEASentence):
         parse_map = (
             ("Heading", "heading"),
             ("True", "hdg_true"))
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
 
         super(GPHDT, self).__init__(parse_map)
 
@@ -448,7 +452,7 @@ class GPR00(NMEASentence):
     def __init__(self):
         parse_map = (
             ("Waypoint List", "waypoint_list"),)
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
 
         super(GPR00, self).__init__(parse_map)
 
@@ -479,11 +483,11 @@ class GPRMA(NMEASentence):
             ("Longitude Direction", "lon_dir"),
             ("Not Used 1", "not_used_1"),
             ("Not Used 2", "not_used_2"),
-            ("Speed over ground", "spd_over_grnd"), # Knots
+            ("Speed over ground", "spd_over_grnd"),  # Knots
             ("Course over ground", "crse_over_grnd"),
             ("Variation", "variation"),
             ("Variation Direction", "var_dir"))
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
 
         super(GPRMA, self).__init__(parse_map)
 
@@ -491,10 +495,11 @@ class GPRMA(NMEASentence):
 class GPRMB(NMEASentence):
     """ Recommended Minimum Navigation Information
     """
+
     def __init__(self):
         parse_map = (
             ("Data Validity", "validity"),
-            ("Cross Track Error", "cross_track_error"), # nautical miles, 9.9 max
+            ("Cross Track Error", "cross_track_error"),  # nautical miles, 9.9 max
             ("Cross Track Error, direction to corrent", "cte_correction_dir"),
             ("Origin Waypoint ID", "origin_waypoint_id"),
             ("Destination Waypoint ID", "dest_waypoint_id"),
@@ -502,17 +507,18 @@ class GPRMB(NMEASentence):
             ("Destination Waypoint Lat Direction", "dest_lat_dir"),
             ("Destination Waypoint Longitude", "dest_lon"),
             ("Destination Waypoint Lon Direction", "dest_lon_dir"),
-            ("Range to Destination", "dest_range"), # Nautical Miles
+            ("Range to Destination", "dest_range"),  # Nautical Miles
             ("True Bearing to Destination", "dest_true_bearing"),
-            ("Velocity Towards Destination", "dest_velocity"), # Knots
-            ("Arrival Alarm", "arrival_alarm")) # A = Arrived, V = Not arrived
-            #("Checksum", "checksum"))
+            ("Velocity Towards Destination", "dest_velocity"),  # Knots
+            ("Arrival Alarm", "arrival_alarm"))  # A = Arrived, V = Not arrived
+        #("Checksum", "checksum"))
         super(GPRMB, self).__init__(parse_map)
 
 
 class GPRMC(NMEASentence):
     """ Recommended Minimum Specific GPS/TRANSIT Data
     """
+
     def __init__(self):
         parse_map = (("Timestamp", "timestamp"),
                      ("Data Validity", "data_validity"),
@@ -525,21 +531,22 @@ class GPRMC(NMEASentence):
                      ("Datestamp", "datestamp"),
                      ("Magnetic Variation", "mag_variation"),
                      ("Magnetic Variation Direction", "mag_var_dir"))
-                     #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
         super(GPRMC, self).__init__(parse_map)
 
 
 class GPRTE(NMEASentence):
     """ Routes
     """
+
     def __init__(self):
         parse_map = (
             ("Number of sentences in sequence", "num_in_seq"),
             ("Sentence Number", "sen_num"),
-            ("Start Type", "start_type"), # The first in the list is either current route or waypoint
+            ("Start Type", "start_type"),  # The first in the list is either current route or waypoint
             ("Name or Number of Active Route", "active_route_id"),
             ("Waypoint List", "waypoint_list"))
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
 
         super(GPRTE, self).__init__(parse_map)
 
@@ -564,10 +571,11 @@ class GPSTN(NMEASentence):
     """ NOTE: No real data could be found for examples of the actual spec so
             it is a guess that there may be a checksum on the end
     """
+
     def __init__(self):
         parse_map = (
-            ("Talker ID Number", "talker_id"),) # 00 - 99
-            #("Checksum", "checksum"))
+            ("Talker ID Number", "talker_id"),)  # 00 - 99
+        #("Checksum", "checksum"))
 
 
         super(GPSTN, self).__init__(parse_map)
@@ -576,6 +584,7 @@ class GPSTN(NMEASentence):
 class GPTRF(NMEASentence):
     """ Transit Fix Data
     """
+
     def __init__(self):
         parse_map = (
             ("Timestamp (UTC)", "timestamp"),
@@ -587,7 +596,7 @@ class GPTRF(NMEASentence):
             ("Elevation Angle", "ele_angle"),
             ("Number of Iterations", "num_iterations"),
             ("Number of Doppler Intervals", "num_doppler_intervals"),
-            ("Update Distance", "update_dist"), # Nautical Miles
+            ("Update Distance", "update_dist"),  # Nautical Miles
             ("Satellite ID", "sat_id"))
 
         super(GPTRF, self).__init__(parse_map)
@@ -596,21 +605,23 @@ class GPTRF(NMEASentence):
 class GPVBW(NMEASentence):
     """ Dual Ground/Water Speed
     """
+
     def __init__(self):
         parse_map = (
-            ("Longitudinal Water Speed", "lon_water_spd"), # Knots
-            ("Transverse Water Speed", "trans_water_spd"), # Knots
+            ("Longitudinal Water Speed", "lon_water_spd"),  # Knots
+            ("Transverse Water Speed", "trans_water_spd"),  # Knots
             ("Water Speed Data Validity", "data_validity_water_spd"),
-            ("Longitudinal Ground Speed", "lon_grnd_spd"), # Knots
-            ("Transverse Ground Speed", "trans_grnd_spd"), # Knots
+            ("Longitudinal Ground Speed", "lon_grnd_spd"),  # Knots
+            ("Transverse Ground Speed", "trans_grnd_spd"),  # Knots
             ("Ground Speed Data Validity", "data_validity_grnd_spd"))
-            #("Checksum", "checksum"))
+        #("Checksum", "checksum"))
         super(GPVBW, self).__init__(parse_map)
 
 
 class GPVTG(NMEASentence):
     """ Track Made Good and Ground Speed
     """
+
     def __init__(self):
         parse_map = (
             ("True Track made good", "true_track"),
@@ -628,10 +639,11 @@ class GPVTG(NMEASentence):
 class GPWCV(NMEASentence):
     """ Waypoint Closure Velocity
     """
+
     def __init__(self):
         parse_map = (
             ("Velocity", "velocity"),
-            ("Velocity Units", "vel_units"), # Knots
+            ("Velocity Units", "vel_units"),  # Knots
             ("Waypoint ID", "waypoint_id"))
 
         super(GPWCV, self).__init__(parse_map)
@@ -640,6 +652,7 @@ class GPWCV(NMEASentence):
 class GPWNC(NMEASentence):
     """ Distance, Waypoint to Waypoint
     """
+
     def __init__(self):
         parse_map = (
             ("Distance, Nautical Miles", "dist_nautical_miles"),
@@ -655,6 +668,7 @@ class GPWNC(NMEASentence):
 class GPWPL(NMEASentence):
     """ Waypoint Location
     """
+
     def __init__(self):
         parse_map = (
             ("Latitude", "lat"),
@@ -669,6 +683,7 @@ class GPWPL(NMEASentence):
 class GPXTE(NMEASentence):
     """ Cross-Track Error, Measured
     """
+
     def __init__(self):
         parse_map = (("General Warning Flag", "warning_flag"),
                      ("Lock flag (Not Used)", "lock_flag"),
@@ -682,12 +697,12 @@ class GPXTE(NMEASentence):
 class GPZDA(NMEASentence):
     def __init__(self):
         parse_map = (
-            ("Timestamp", "timestamp"), # hhmmss.ss = UTC
-            ("Day", "day"), # 01 to 31
-            ("Month", "month"), # 01 to 12
-            ("Year", "year"), # Year = YYYY
-            ("Local Zone Description", "local_zone"), # 00 to +/- 13 hours
-            ("Local Zone Minutes Description", "local_zone_minutes")) # same sign as hours
+            ("Timestamp", "timestamp"),  # hhmmss.ss = UTC
+            ("Day", "day"),  # 01 to 31
+            ("Month", "month"),  # 01 to 12
+            ("Year", "year"),  # Year = YYYY
+            ("Local Zone Description", "local_zone"),  # 00 to +/- 13 hours
+            ("Local Zone Minutes Description", "local_zone_minutes"))  # same sign as hours
         #("Checksum", "checksum"))
 
         super(GPZDA, self).__init__(parse_map)
@@ -915,6 +930,7 @@ class GPZDA(NMEASentence):
 class PGRME(NMEASentence):
     """ GARMIN Estimated position error
     """
+
     def __init__(self):
         parse_map = (("Estimated Horiz. Position Error", "hpe"),
                      ("Estimated Horiz. Position Error Unit (M)", "hpe_unit"),
@@ -929,6 +945,7 @@ class PGRME(NMEASentence):
 class PGRMM(NMEASentence):
     """ GARMIN Map Datum
     """
+
     def __init__(self):
         parse_map = (('Currently Active Datum', 'datum'),)
 
@@ -938,6 +955,7 @@ class PGRMM(NMEASentence):
 class PGRMZ(NMEASentence):
     """ GARMIN Altitude Information
     """
+
     def __init__(self):
         parse_map = (("Altitude", "altitude"),
                      ("Altitude Units (Feet)", "altitude_unit"),
