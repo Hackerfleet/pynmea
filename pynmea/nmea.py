@@ -924,6 +924,45 @@ class GPZDA(NMEASentence):
 #        super(GPDCN).__init__(parse_map)
 
 
+
+# Hackerfleet contributed
+#
+# 1. Transducer Sentences
+
+class SDDPT(NMEASentence):
+    """ Transducer: Depth in Meters
+    """
+
+    def __init__(self):
+        parse_map = (("Depth in meters", "depth_meters"),)
+
+        super(SDDPT, self).__init__(parse_map)
+
+class SDMTW(NMEASentence):
+    """ Transducer: Water Termperature
+    """
+
+    def __init__(self):
+        parse_map = (("Water Temperature in °C", "temperature_water_celsius"),)
+
+        super(SDMTW, self).__init__(parse_map)
+
+class SDDBT(NMEASentence):
+    """ Transducer: The mad message including all kinds of weird stuff
+    """
+
+    def __init__(self):
+        parse_map = (("Depth in Feet", "depth_feet"),
+                     ("Depth in Feet Unit (f)", "depth_feet_unit"),
+                     ("Depth in Meters", "depth_meters"),
+                     ("Depth in Meters Unit (M)", "depth_meters_unit"),
+                     ("Depth in Fatoms", "depth_fathoms"),
+                     ("Depth in Fathoms Unit (F)", "depth_fathoms_unit")
+        )
+
+        super(SDDBT, self).__init__(parse_map)
+
+
 # PROPRIETRY SENTENCES
 
 # -- GARMIN -- #

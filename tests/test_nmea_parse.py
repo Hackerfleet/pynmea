@@ -3,7 +3,7 @@ from pynmea.nmea import (NMEASentence, GPAAM, GPALM, GPAPA, GPAPB, GPBEC, GPBOD,
                          GPBWC, GPBWR, GPBWW, GPGGA, GPGLL, GPGSA, GPGSV, GPHDG,
                          GPHDT, GPZDA, GPSTN, GPRMA, GPRMB, GPRMC, GPRTE, GPR00,
                          GPTRF, GPVBW, GPVTG, GPWCV, GPWNC, GPWPL, GPXTE,
-                         PGRME, PGRMZ, PGRMM)
+                         PGRME, PGRMZ, PGRMM, SDDPT, SDMTW, SDDBT)
 
 from pynmea.utils import checksum_calc
 
@@ -1293,3 +1293,52 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(result5, '77')
         self.assertEqual(result6, '77')
         self.assertEqual(result7, '02')
+
+
+# Hackerfleet Transducer test classes
+
+class TestSDDPT(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_parses_map(self):
+        p = SDDPT()
+        p.parse("SDDPT,42.23*52")
+
+        self.assertEqual("SDDPT", p.sen_type)
+        self.assertEqual("42.23", p.depth_meters)
+        self.assertEqual("52", p.checksum)
+
+class TestSDMTW(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_parses_map(self):
+        p = SDMTW()
+        p.parse("SDMTW,23.42*5C")
+
+        self.assertEqual("SDMTW", p.sen_type)
+        self.assertEqual("23.42", p.temperature_water_celsius)
+        self.assertEqual("5C", p.checksum)
+
+class TestSDDBT(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_parses_map(self):
+        p = SDDBT()
+        p.parse("SDDBT,60.46,f,18.43,M,10.07,F*0A")
+
+        self.assertEqual("SDDBT", p.sen_type)
+        self.assertEqual("60.46", p.depth_feet)
+        self.assertEqual("18.43", p.depth_meters)
+        self.assertEqual("10.07", p.depth_fathoms)
