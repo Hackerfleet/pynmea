@@ -1,1 +1,5 @@
-readne
+This is Hackerfleets fork of pynmea.
+
+We enhanced it with the following things:
+* Transducer sentences
+* Working Python 3.x compatibility
