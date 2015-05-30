@@ -1,5 +1,7 @@
-This is Hackerfleets fork of pynmea.
+This is Hackerfleet's fork of pynmea.
 
 We enhanced it with the following things:
 * Transducer sentences
 * Working Python 3.x compatibility
+
+The original Author is Becky Lewis - huge thanks for her great work!

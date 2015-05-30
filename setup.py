@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(name="pynmea",
-      version="0.3.0",
+      version="0.7.0",
       description="Python NMEA Library",
-      author="Becky Lewis",
-      author_email="pynmea@scaryclam.co.uk",
-      url="https://code.google.com/p/pynmea/",
+      author="Heiko 'riot' Weinen",
+      author_email="riot@hackerfleet.org",
+      url="https://github.com/hackerfleet/pynmea",
       license="MIT",
       packages=['pynmea'])
